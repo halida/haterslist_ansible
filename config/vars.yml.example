@@ -1,0 +1,25 @@
+---
+apps:
+  haterslist1:
+    name: haterslist
+    hostname: haterslist.dev
+    app_path: '/home/production/apps/haterslist'
+    ruby: 'ruby-2.3.3'
+    rails_secret_token: token
+
+    mysql:
+      host: localhost
+      database: haterslist
+      username: haterslist
+      password: haterslist
+
+dbs:
+  db1:
+    mysql_root_password: password
+    databases:
+      - haterslist
+    users:
+      - name: haterslist
+        password: haterslist
+        priv: 'haterslist.*:ALL'
+  
