@@ -1,0 +1,3 @@
+---
+
+app_path: "/home/{{deployer}}/{{deploy_path}}/{{name}}"

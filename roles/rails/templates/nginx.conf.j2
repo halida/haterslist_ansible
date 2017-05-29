@@ -1,0 +1,33 @@
+upstream {{name}}_server {
+    server unix:{{app_path}}/shared/tmp/thin.0.sock fail_timeout=0;
+}
+server {
+    listen   80;
+    server_name {{hostname}};
+    root {{app_path}}/current/public;
+
+    try_files $uri/index.html $uri @app;
+
+    location ~ ^/(assets)/ {
+        root {{app_path}}/current/public;
+        expires 1y;
+        access_log off;
+        gzip_static on;
+        add_header Cache-Control public;
+        break;
+    }
+
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+
+        if (!-f $request_filename) {
+            proxy_pass http://{{name}}_server;
+        }
+    }
+    error_page 500 502 503 504 /500.html;
+    client_max_body_size 4G;
+    keepalive_timeout 10;
+}

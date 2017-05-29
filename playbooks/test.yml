@@ -1,0 +1,6 @@
+---
+- hosts: all
+  remote_user: production
+  tasks:
+    - name: test
+      command: "lsb_release -a"

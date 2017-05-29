@@ -1,0 +1,28 @@
+---
+
+- name: check pwd
+  file:
+    path: "{{app_path}}"
+    state: directory
+
+- name: install nginx
+  apt:
+    name: nginx
+  become: true
+
+- name: create nginx script for app
+  template:
+    src: "nginx.conf.j2"
+    dest: "/etc/nginx/sites-available/{{name}}.conf"
+  become: true
+
+- name: link script
+  file:
+    src: "/etc/nginx/sites-available/{{name}}.conf"
+    dest: "/etc/nginx/sites-enabled/{{name}}.conf"
+    state: link
+  become: true
+
+- name: restart nginx
+  service: name=nginx state=restarted enabled=true
+  become: true

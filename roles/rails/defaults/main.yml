@@ -1,0 +1,6 @@
+---
+
+deployer: 'production'
+deploy_path: 'apps'
+name: 'app'
+hostname: 'app.dev'
