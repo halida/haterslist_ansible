@@ -1,0 +1,12 @@
+---
+
+- name: check directory
+  file:
+    path: "{{app_path}}/shared/config/"
+    state: directory
+
+- name: copy shared files
+  synchronize:
+    src: "{{ config_path }}/"
+    dest: "{{app_path}}/shared/config/"
+  

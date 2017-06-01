@@ -4,14 +4,8 @@ apps:
     name: haterslist
     hostname: haterslist.dev
     app_path: '/home/production/apps/haterslist'
+    config_path: '~/data/workspace/arch/haterslist_conf/app1/haterslist1/'
     ruby: 'ruby-2.3.3'
-    rails_secret_token: token
-
-    mysql:
-      host: localhost
-      database: haterslist
-      username: haterslist
-      password: haterslist
 
 dbs:
   db1:

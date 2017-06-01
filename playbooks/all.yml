@@ -5,26 +5,29 @@
     - ../config/vars.yml
   vars:
     app: "{{ apps['haterslist1'] }}"
-  # tasks:
-  #   - name: test apps
-  #     command: "echo '{{ app }}'"
+  tasks:
+  - name: install dependences for haterslist
+    apt:
+      name: "{{item}}"
+    with_items:
+      - build-essential
+      - libmysqlclient-dev
+    become: true
+  
   roles:
     - role: rails
       deployer: 'production'
       deploy_path: 'apps'
       name: "{{ app['name'] }}"
       hostname: "{{ app['hostname'] }}"
+      service: "{{ app['service'] }}"
+      config_path: "{{ app['config_path'] }}"
 
-    - role: haterslist
-      app_path: "{{ app['app_path'] }}"
-      mysql: "{{ app['mysql'] }}"
-      rails_secret_token: "{{ app['rails_secret_token'] }}"
-
-    - role: rvm_io.ruby
-      tags: ruby
-      rvm1_rubies:
-        - "{{ app['ruby'] }}"
-      rvm1_user: 'production'
+    # - role: rvm_io.ruby
+    #   tags: ruby
+    #   rvm1_rubies:
+    #     - "{{ app['ruby'] }}"
+    #   rvm1_user: 'production'
 
 
 - hosts: db

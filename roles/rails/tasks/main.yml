@@ -1,9 +1,8 @@
 ---
 
-- name: check pwd
-  file:
-    path: "{{app_path}}"
-    state: directory
+- name: prepare workspace
+  include: 'workspace.yml'
+  become: yes
 
 - name: prepare nginx
   include: 'nginx.yml'
@@ -12,3 +11,4 @@
 - name: prepare systemd script
   include: 'systemd.yml'
   become: yes
+
