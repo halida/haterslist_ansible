@@ -1,0 +1,28 @@
+# copy from https://github.com/macournoyer/thin/pull/184#issuecomment-191119259
+
+[Unit]
+Description={{name}}
+After=syslog.target network.target
+ 
+[Service]
+Type=forking
+User={{deployer}}
+Group={{deployer}}
+WorkingDirectory={{app_path}}/current
+
+ExecStart=/bin/bash -lc 'bundle exec thin start -C {{app_path}}/current/config/thin.yml'
+ExecReload=/bin/bash -lc 'bundle exec thin restart -C {{app_path}}/current/config/thin.yml'
+ExecStop=/bin/bash -lc 'bundle exec thin stop -C {{app_path}}/current/config/thin.yml'
+
+{% if service and service['memory_limit'] %}
+MemoryMax={{ service['memory_limit'] }}
+{% endif %}
+
+Restart=always
+RestartSec=3
+TimeoutSec=300
+
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,21 @@
+---
+
+- name: install nginx
+  apt:
+    name: nginx
+
+- name: create nginx script for app
+  template:
+    src: "nginx.conf.j2"
+    dest: "/etc/nginx/sites-available/rails_{{name}}.conf"
+
+- name: link script
+  file:
+    src: "/etc/nginx/sites-available/rails_{{name}}.conf"
+    dest: "/etc/nginx/sites-enabled/rails_{{name}}.conf"
+    state: link
+
+- name: restart nginx
+  service: name=nginx state=restarted enabled=true
+
+
