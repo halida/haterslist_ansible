@@ -23,11 +23,13 @@
       service: "{{ app['service'] }}"
       config_path: "{{ app['config_path'] }}"
 
-    # - role: rvm_io.ruby
-    #   tags: ruby
-    #   rvm1_rubies:
-    #     - "{{ app['ruby'] }}"
-    #   rvm1_user: 'production'
+    - role: rvm_io.ruby
+      tags: ruby
+      rvm1_rubies:
+        - "{{ app['ruby'] }}"
+      rvm1_user: 'production'
+      rvm1_rvm_check_for_updates: False
+      rvm1_gpg_keys: '' # ignore after first time
 
 
 - hosts: db
