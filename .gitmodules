@@ -3,4 +3,4 @@
 	url = https://github.com/rvm/rvm1-ansible.git
 [submodule "roles/bareos"]
 	path = roles/bareos
-	url = https://github.com/kbrebanov/ansible-bareos.git
+	url = git@github.com:halida/ansible-bareos.git
