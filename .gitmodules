@@ -1,3 +1,6 @@
 [submodule "roles/rvm_io.ruby"]
 	path = roles/rvm_io.ruby
 	url = https://github.com/rvm/rvm1-ansible.git
+[submodule "roles/bareos"]
+	path = roles/bareos
+	url = https://github.com/kbrebanov/ansible-bareos.git
