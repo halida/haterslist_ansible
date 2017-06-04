@@ -1,5 +1,8 @@
 ---
-- hosts: app
+# - include: backup.yml
+
+- name: application server for haterslist
+  hosts: app
   remote_user: production
   vars_files:
     - ../config/vars.yml
@@ -28,8 +31,9 @@
       rvm1_rubies:
         - "{{ app['ruby'] }}"
       rvm1_user: 'production'
+      # ignores after first time
       rvm1_rvm_check_for_updates: False
-      rvm1_gpg_keys: '' # ignore after first time
+      rvm1_gpg_keys: ''
 
 
 - hosts: db

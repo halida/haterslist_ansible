@@ -1,4 +1,8 @@
 ---
+config_path: "~/data/workspace/arch/haterslist_conf"
+backup:
+  bareos_server_director_password: "password_for_backup_543674674"
+
 apps:
   haterslist1:
     name: haterslist

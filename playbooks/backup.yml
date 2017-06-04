@@ -1,0 +1,49 @@
+---
+- name: backup client
+  hosts: backup-client
+  remote_user: production
+  become: true
+  vars_files:
+    - ../config/vars.yml
+  roles:
+    - role: bareos
+      bareos_server: False
+      bareos_client: True
+      bareos_version: 16.2
+      bareos_server_director_password: "{{ backup['bareos_server_director_password'] }}"
+  post_tasks:
+    - name: copy
+      copy:
+        src: "{{config_path}}/app1/bareos/bareos-dir.conf"
+        dest: "/etc/bareos/bareos-fd.d/director/bareos-dir.conf"
+      become_user: bareos
+
+- name: backup server
+  hosts: backup-server
+  remote_user: production
+  become: true
+  vars_files:
+    - ../config/vars.yml
+  pre_tasks:
+    - name: install postgresql
+      apt: name={{item}}
+      with_items:
+        - postgresql
+        
+  roles:
+    - role: bareos
+      bareos_server: True
+      bareos_client: False
+      bareos_version: 16.2
+      bareos_server_director_password: "{{ backup['bareos_server_director_password'] }}"
+  post_tasks:
+    - name: copy jobs
+      synchronize:
+        src: "{{config_path}}/backup-server1/bareos/job/"
+        dest: "/etc/bareos/bareos-dir.d/job/"
+      become_user: bareos
+    - name: copy client info
+      synchronize:
+        src: "{{config_path}}/backup-server1/bareos/client/"
+        dest: "/etc/bareos/bareos-dir.d/client/"
+      become_user: bareos
