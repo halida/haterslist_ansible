@@ -4,7 +4,7 @@
   remote_user: production
   become: true
   vars_files:
-    - ../config/vars.yml
+    - ../../haterslist_conf/config/vars.yml
   roles:
     - role: bareos
       bareos_server: False
@@ -23,7 +23,7 @@
   remote_user: production
   become: true
   vars_files:
-    - ../config/vars.yml
+    - ../../haterslist_conf/config/vars.yml
   pre_tasks:
     - name: install postgresql
       apt: name={{item}}
