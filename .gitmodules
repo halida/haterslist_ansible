@@ -4,3 +4,9 @@
 [submodule "roles/bareos"]
 	path = roles/bareos
 	url = git@github.com:halida/ansible-bareos.git
+[submodule "roles/zabbix-server"]
+	path = roles/zabbix-server
+	url = https://github.com/dj-wasabi/ansible-zabbix-server.git
+[submodule "roles/zabbix-agent"]
+	path = roles/zabbix-agent
+	url = https://github.com/dj-wasabi/ansible-zabbix-agent.git
