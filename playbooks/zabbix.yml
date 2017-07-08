@@ -1,2 +1,39 @@
 ---
 # https://github.com/dj-wasabi/ansible-zabbix-server
+- hosts: zabbix-server
+  remote_user: production
+  become: yes
+  vars_files:
+    - ../../haterslist_conf/ansible/vars.yml
+  tasks:
+    - name: install mysql
+      apt:
+        name: "{{item}}"
+        become: true
+        with_items:
+          - mysql-server
+          - python-mysqldb
+  roles:
+    - role: geerlingguy.apache
+    - role: zabbix-server
+      zabbix_url: "{{zabbix['server_ip']}}"
+      zabbix_version: 3.2
+      zabbix_web: true
+      database_type: mysql
+      database_type_long: mysql
+      zabbix_database_creation: true
+      server_dbname: zabbix-server
+      server_dbuser: zabbix-server
+      server_dbpassword: "{{ zabbix['mysql_user_password'] }}"
+      
+
+- hosts: zabbix-agent
+  remote_user: production
+  become: yes
+  vars_files:
+    - ../../haterslist_conf/ansible/vars.yml
+  roles:
+    - role: zabbix-agent
+      agent_server: "{{zabbix['server_ip']}}"
+      agent_serveractive: "{{zabbix['server_ip']}}"
+      zabbix_version: 3.2

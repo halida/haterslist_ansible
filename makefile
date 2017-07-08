@@ -5,8 +5,8 @@ all:
 	$(PLAYBOOK) playbooks/all.yml
 
 # only update one server
-backup:
-	$(PLAYBOOK) playbooks/all.yml --limit backup-client
+sep:
+	$(PLAYBOOK) playbooks/all.yml --limit zabbix-agent
 
 test:
 	$(PLAYBOOK) playbooks/test.yml
